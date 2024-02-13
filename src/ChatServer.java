@@ -15,9 +15,11 @@ public class ChatServer {
         ServerSocket ss = new ServerSocket(PORT);
 
         try {
-            Socket s = ss.accept();
-            Thread handlerThread = new Thread(new Handler(s));
-            handlerThread.start();
+            while (true) {
+                Socket s = ss.accept();
+                Thread handlerThread = new Thread(new Handler(s));
+                handlerThread.start();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
