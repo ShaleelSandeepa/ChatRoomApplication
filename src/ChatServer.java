@@ -1,4 +1,5 @@
 import java.io.*;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
 
@@ -9,6 +10,19 @@ public class ChatServer {
     private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
 
     public static void main(String[] args) throws Exception {
+
+        System.out.println("The chat server is running...");
+        ServerSocket ss = new ServerSocket(PORT);
+
+        try {
+            Socket s = ss.accept();
+            Thread handlerThread = new Thread(new Handler(s));
+            handlerThread.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
 
     }
 
